@@ -1,0 +1,21 @@
+{
+  "name": "api-diff",
+  "version": "0.0.1",
+  "description": "Endpoints response comparison tool",
+  "main": "App.js",
+  "scripts": {
+    "build": "rm -rf ./build && tsc",
+    "run": "node build/api-diff.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nikolai Poriadin",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.10.1",
+    "typescript": "^5.3.2"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "node": "^21.2.0"
+  }
+}

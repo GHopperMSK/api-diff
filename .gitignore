@@ -1,0 +1,5 @@
+node_modules
+build
+endpoints.txt
+diff.json
+.env
