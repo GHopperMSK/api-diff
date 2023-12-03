@@ -43,8 +43,8 @@ Promise.all([authOld.auth(), authNew.auth(), fileClient.read(process.env.ENDPOIN
 })
 
 async function compare(endpoints: Array<string>): Promise<DiffBucket> {
-    const clientOld: HttpClient = new HttpClient("dev190", authOld)
-    const clientNew: HttpClient = new HttpClient("dev195", authNew)
+    const clientOld: HttpClient = new HttpClient(process.env.OLD_HOST, authOld)
+    const clientNew: HttpClient = new HttpClient(process.env.NEW_HOST, authNew)
     return comparor.compareEndpoints(endpoints, clientNew, clientOld)
 }
 

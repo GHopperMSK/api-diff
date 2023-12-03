@@ -2,18 +2,16 @@ import { AuthDriverInterface } from 'api-diff'
 
 class HttpClient
 {
-    readonly SERVER_URL_PATTERN: string = "https://{{server}}.lexia-dev.com"
-
     private authDriver: AuthDriverInterface
-    private serverUrl: string
+    private serverHost: string
 
-    constructor(server: string, authDriver: AuthDriverInterface) {
+    constructor(serverHost: string, authDriver: AuthDriverInterface) {
         this.authDriver = authDriver
-        this.serverUrl = this.SERVER_URL_PATTERN.replace("{{server}}", server)
+        this.serverHost = serverHost
     }
 
     async fetch(endpoint: string): Promise<string> {
-        const url: string = `${this.serverUrl}/${endpoint}`
+        const url: string = `${this.serverHost}/${endpoint}`
         const options = {
             method: "GET",
             headers: {
