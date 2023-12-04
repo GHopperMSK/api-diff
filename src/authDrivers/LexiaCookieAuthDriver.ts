@@ -29,10 +29,10 @@ class LexiaCookieAuthDriver implements AuthDriverInterface
                 // extract PHPSESSID from cookie string
                 const phpSessId: string = cookie.substring(10, cookie.indexOf("; path="))
                 this.sessionId = phpSessId
-                resolve(`Authenticated on ${this.url} server`)
+                resolve(`Authenticated on ${this.url}`)
             }
 
-            reject("Couldn't get PHPSESSID cookie")
+            reject(`Couldn't get PHPSESSID cookie from ${this.url}`)
         })
     }
 

@@ -23,13 +23,13 @@ class HttpClient
 
         return fetch(request).then((response) => {
             if (!response.ok) {
-                throw new Error(response.statusText)
+                return Promise.reject(`Got ${response.status} status code from ${url}`)
             }
             return response.json()
         }).then((data) => {
             return data
         }).catch(() => {
-            throw new Error(`Couldn't get data from ${url}`)
+            return Promise.reject(`Couldn't get data from ${url}`)
         })
     }
 

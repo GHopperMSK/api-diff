@@ -39,6 +39,10 @@ class Logger
         this.log(line)
     }
 
+    error(message: string) {
+        this.log("ERROR: " + message)
+    }
+
 }
 
 export default Logger

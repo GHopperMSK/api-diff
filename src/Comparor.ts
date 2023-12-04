@@ -1,43 +1,8 @@
-import Logger from './Logger'
-import HttpClient from './HttpClient'
-import { JSON, DiffBucket } from 'api-diff'
+import { JSON } from 'api-diff'
 
 class Comparor
 {
-    readonly CHUNK_SIZE: number = 10
-    private logger: Logger
-
-    constructor(logger: Logger) {
-        this.logger = logger
-    }
-
-    async compareEndpoints(endpoints: Array<string>, clientNew: HttpClient, clientOld: HttpClient): Promise<DiffBucket> {
-        const diffs: DiffBucket = {}
-        while (endpoints.length) {
-            await Promise.all(endpoints.splice(0, this.CHUNK_SIZE).map((endpoint: string) => {
-                return Promise.all([clientNew.fetch(endpoint), clientOld.fetch(endpoint)]).then((values) => {
-                        const newJson = values[0]
-                        const oldJson = values[1]
-                        const endpointMessage: string = `Endpoint /${endpoint}`
-                        const diff: Object|null = this.getDifference(newJson, oldJson)
-                        if (diff == null) {
-                            this.logger.ok(endpointMessage)
-                        } else {
-                            this.logger.fail(endpointMessage)
-                            diffs[endpoint] = diff
-                        }
-                    }).catch((error: Error) => {
-                        this.logger.log("Error: " + error.message)
-                    })
-            })).catch((error: Error) => {
-                this.logger.log('Error: ' + error.message)
-            })
-        }
-
-        return Promise.resolve(diffs)
-    }
-
-    private getDifference(newJson: JSON, oldJson: JSON): Object|null {
+    public getDifference(newJson: JSON, oldJson: JSON): Object|null {
         // check if JSONs are exactly same
         if (JSON.stringify(newJson) === JSON.stringify(oldJson)) {
             return null

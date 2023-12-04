@@ -2,15 +2,17 @@ import * as fs from 'fs'
 
 class FileSystemClient
 {
-    static readonly ENDPOINTS_FILE: string = "endpoints.txt"
-    static readonly OUTPUT_FILE: string = "diff.json"
+    static readonly DEFAULT_ENDPOINTS_FILENAME: string = "endpoints.txt"
+    static readonly DEFAULT_OUTPUT_FILENAME: string = "diff.json"
 
-    async read(filename: string): Promise<Array<string>> {
-        return fs.promises.readFile(filename).then((buffer: Buffer) => {
-            return new Promise<Array<string>>((resolve, reject) => {
+    async read(fileName: string): Promise<Array<string>> {
+        return fs.promises.readFile(fileName).then((buffer: Buffer) => {
+            return new Promise<Array<string>>(resolve => {
                 const lines: Array<string> = buffer.toString().split("\n")
                 resolve(this.cleanup(lines))
             })
+        }).catch(() => {
+            throw new Error(`Couldn't read ${fileName} file`)
         })
     }
 
